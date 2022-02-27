@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MicroClient",
+        "repositoryURL": "https://github.com/otaviocc/MicroClient.git",
+        "state": {
+          "branch": null,
+          "revision": "758df84c38dc663cc00b49b377fc8a033a8d4100",
+          "version": "0.0.12"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
