@@ -7,10 +7,12 @@ final class MicropubRequestFactoryTests: XCTestCase {
     // MARK: - Tests
 
     func testMakeNewPostRequestRequired() {
+        // Given
         let request = MicropubRequestFactory.makeNewPostRequest(
             content: "This is the post content"
         )
 
+        // When
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 2)
@@ -25,12 +27,10 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let syndicateURL = URL(string: "http://localhost/fake/syndicate")
 
         // Given
-
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.timeZone = TimeZone.current
 
         // When
-
         let request = MicropubRequestFactory.makeNewPostRequest(
             name: "This is the post title",
             summary: "This is the post summary",
@@ -44,7 +44,6 @@ final class MicropubRequestFactoryTests: XCTestCase {
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 11)
@@ -67,12 +66,10 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let syndicateURL = URL(string: "http://localhost/fake/syndicate")
 
         // Given
-
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.timeZone = TimeZone.current
 
         // When
-
         let request = MicropubRequestFactory.makeReplyRequest(
             content: "This is the post content",
             replyToURL: replyToURL,
@@ -81,7 +78,6 @@ final class MicropubRequestFactoryTests: XCTestCase {
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 5)
@@ -96,14 +92,12 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let repostURL = URL(string: "http://localhost/fake/repost")!
 
         // When
-
         let request = MicropubRequestFactory.makeRepostRequest(
             repostURL: repostURL,
             categories: ["category1", "category2"]
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 4)
@@ -117,7 +111,6 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let bookmarkURL = URL(string: "http://localhost/fake/bookmark")!
 
         // When
-
         let request = MicropubRequestFactory.makeBookmarkRequest(
             name: "This is the bookmark title",
             content: "This is the bookmark description",
@@ -126,7 +119,6 @@ final class MicropubRequestFactoryTests: XCTestCase {
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 6)
@@ -140,11 +132,9 @@ final class MicropubRequestFactoryTests: XCTestCase {
 
     func testMakeConfigurationRequest() {
         // When
-
         let request = MicropubRequestFactory.makeConfigurationRequest()
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .get)
         XCTAssertEqual(request.queryItems?.filter { $0.value != nil }.count, 1)
@@ -155,14 +145,12 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let someURL = URL(string: "http://localhost/fake/some")!
 
         // When
-
         let request = MicropubRequestFactory.makeActionRequest(
             action: .delete,
             url: someURL
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 2)
@@ -174,14 +162,12 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let someURL = URL(string: "http://localhost/fake/some")!
 
         // When
-
         let request = MicropubRequestFactory.makeActionRequest(
             action: .undelete,
             url: someURL
         )
 
         // Then
-
         XCTAssertEqual(request.path, "/micropub")
         XCTAssertEqual(request.method, .post)
         XCTAssertEqual(request.formItems?.filter { $0.value != nil }.count, 2)
@@ -194,7 +180,6 @@ final class MicropubRequestFactoryTests: XCTestCase {
         let mediaData = "mock_data".data(using: .utf8)
 
         // Given
-
         let media = Media.other(
             mediaData,
             fileExtension: "toto",
@@ -202,14 +187,12 @@ final class MicropubRequestFactoryTests: XCTestCase {
         )
 
         // When
-
         let request = MicropubRequestFactory.makeUploadRequest(
             media: media,
             mediaURL: mediaURL
         )
 
         // Then
-
         let formDataContent = String(
             data: try XCTUnwrap(request.body),
             encoding: .utf8
